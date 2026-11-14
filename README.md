@@ -2,7 +2,7 @@
   <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" width="80" alt="Hugging Face"/>
 </p>
 
-<h1 align="center">Sleepy Orangutan</h1>
+<h1 align="center">🦧 Sleepy Orangutan</h1>
 <h3 align="center">Edge-computing VLA inference for distilled π₀.₅ students</h3>
 
 <p align="center">
@@ -18,9 +18,8 @@
 </p>
 
 <p align="center">
-  Distilled <b>vision–language–action (VLA)</b> policies for <b>edge computing</b>: multi-camera + proprio in, action chunks out — without loading the full π₀.₅ teacher on device.<br/>
-  <b>RunningTensor (RT/FLA4)</b> and <b>Gated DeltaNet</b> LIBERO students, ~1000× smaller than the teacher; chunk inference with vendored PyTorch + optional Triton.<br/>
-  Weights stay on Hugging Face as <code>LucaPeroxide/minipi05-libero-*</code> (legacy Hub names); <code>pip install sleepy-orangutan</code> downloads them to <code>~/.cache/sleepy_orangutan</code>. Public repos need no token.
+  Distilled <b>vision–language–action (VLA)</b> policies into <b>microscopic models</b>: multi-camera + proprio in, action chunks out — without loading the full π₀.₅ teacher on device.<br/>
+  <b>RunningTensor</b> LIBERO students, 1000× smaller, 5x faster.<br/>
 </p>
 
 ## Install
