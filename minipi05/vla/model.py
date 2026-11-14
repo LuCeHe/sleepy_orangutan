@@ -126,7 +126,9 @@ class VLAStudentPolicy(nn.Module):
     @classmethod
     def load_checkpoint(cls, path: str, *, map_location: str | torch.device = "cpu") -> "VLAStudentPolicy":
         payload = torch.load(path, map_location=map_location, weights_only=False)
-        config = VLAStudentConfig(**payload["config"])
+        from minipi05.vla.config import vla_config_from_saved_dict
+
+        config = vla_config_from_saved_dict(payload["config"])
         model = cls(config)
         model.load_state_dict(payload["state_dict"])
         if "args" in payload:
