@@ -1,10 +1,29 @@
-# sleepy_orangutan
+<p align="center">
+  <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" width="80" alt="Hugging Face"/>
+</p>
 
-**Sleepy Orangutan** — tiny edge VLAs distilled from Physical Intelligence **π₀.₅** on LIBERO with a **RunningTensor** linear attention students, ~1000× smaller than the teacher with low-latency chunk inference.
+<h1 align="center">Sleepy Orangutan</h1>
+<h3 align="center">Edge-computing VLA inference for distilled π₀.₅ students</h3>
 
+<p align="center">
+  <a href="https://huggingface.co/LucaPeroxide"><img alt="Checkpoints on Hub" src="https://img.shields.io/badge/%F0%9F%A4%97%20Checkpoints-Hub-yellow"/></a>
+  <a href="https://github.com/lucehe/sleepy_orangutan"><img alt="GitHub" src="https://img.shields.io/badge/GitHub-lucehe%2Fsleepy_orangutan-181717?logo=github"/></a>
+  <a href="https://github.com/lucehe/sleepy_orangutan/blob/main/README.md"><img alt="Documentation" src="https://img.shields.io/badge/docs-README-blue"/></a>
+  <a href="#license"><img alt="License MIT" src="https://img.shields.io/badge/license-MIT-green"/></a>
+  <a href="https://www.python.org/downloads/"><img alt="Python" src="https://img.shields.io/badge/python-%3E%3D3.10-blue"/></a>
+</p>
+
+<p align="center">
+  <b>English</b>
+</p>
+
+<p align="center">
+  Distilled <b>vision–language–action (VLA)</b> policies for <b>edge computing</b>: multi-camera + proprio in, action chunks out — without loading the full π₀.₅ teacher on device.<br/>
+  <b>RunningTensor (RT/FLA4)</b> and <b>Gated DeltaNet</b> LIBERO students, ~1000× smaller than the teacher; chunk inference with vendored PyTorch + optional Triton.<br/>
+  Weights stay on Hugging Face as <code>LucaPeroxide/minipi05-libero-*</code> (legacy Hub names); <code>pip install sleepy-orangutan</code> downloads them to <code>~/.cache/sleepy_orangutan</code>. Public repos need no token.
+</p>
 
 ## Install
-
 
 ```bash
 pip install "git+https://github.com/lucehe/sleepy_orangutan.git"
@@ -45,7 +64,6 @@ from sleepy_orangutan import SleepyOrangutan
 bot = SleepyOrangutan.libero_rt(seed=0)
 ```
 
-See `notebooks/minipi05_colab_smoke.ipynb` (update pip URL after GitHub rename).
 
 ## License
 
