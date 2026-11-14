@@ -11,10 +11,6 @@
 </p>
 
 <p align="center">
-  <b>English</b>
-</p>
-
-<p align="center">
   Distilled <b>vision–language–action (VLA)</b> policies into <b>microscopic models</b>: multi-camera + proprio in, action chunks out — without loading the full π₀.₅ teacher on device.<br/>
   <b>RunningTensor</b> LIBERO students, 1000× smaller, 5x faster.<br/>
 </p>
