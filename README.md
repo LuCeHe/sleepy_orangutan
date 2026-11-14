@@ -107,6 +107,34 @@ Re-vendor STM from PebbleTrail after trunk changes:
 python scripts/vendor_stm.py
 ```
 
+## Google Colab smoke test
+
+1. **Runtime → Change runtime type → T4 GPU**
+2. Open `notebooks/minipi05_colab_smoke.ipynb`, or paste:
+
+```python
+%pip install -q "git+https://github.com/lucehe/minipi05.git"
+%pip install -q triton
+```
+
+3. Optional (private HF repos): Colab **Secrets** → `HF_TOKEN` (read is enough for downloads).
+
+```python
+import os
+from google.colab import userdata
+os.environ["HF_TOKEN"] = userdata.get("HF_TOKEN")
+```
+
+4. Run all four RT experts (after you published `minipi05-libero-rt-s0` … `s3`):
+
+```bash
+!git clone --depth 1 https://github.com/lucehe/minipi05.git /content/minipi05
+!python /content/minipi05/scripts/colab_smoke.py --experts rt_libero_s0 --benchmark
+!python /content/minipi05/scripts/colab_smoke.py --experts rt_libero_s0,rt_libero_s1,rt_libero_s2,rt_libero_s3
+```
+
+Success = each line prints `predict_chunk OK` with `delta=stm`. If GitHub lags your JZ tree, pip from a branch or `pip install -e /content/minipi05` after uploading the repo to Drive.
+
 ## License
 
 MIT for minipi05 wrapper; `minipi05/gateddeltanet/` includes FLA-derived code — see `gateddeltanet/LICENSE_FLA`.
