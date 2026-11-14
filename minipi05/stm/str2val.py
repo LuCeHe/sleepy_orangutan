@@ -11,7 +11,9 @@ T = TypeVar("T")
 def str2val(notes: str, key: str, default: Any = "", output_type: type = str) -> Any:
     m = re.search(rf"{re.escape(key)}:([^_:]+)", notes or "")
     if not m:
-        return output_type(default) if output_type is not str else default
+        if default is None or output_type is str:
+            return default
+        return output_type(default)
     raw = m.group(1)
     if output_type is bool:
         return raw.lower() in ("1", "true", "yes", "on")
