@@ -12,7 +12,11 @@ def main() -> None:
     p.add_argument("repo_id", help="e.g. your-username/minipi05-droid-stm-10m")
     p.add_argument("checkpoint", type=Path, help="Path to student.pt")
     p.add_argument("--filename", default="student.pt")
-    p.add_argument("--private", action="store_true")
+    p.add_argument(
+        "--private",
+        action="store_true",
+        help="Default is public (no HF token needed for Colab download).",
+    )
     args = p.parse_args()
 
     if not args.checkpoint.is_file():

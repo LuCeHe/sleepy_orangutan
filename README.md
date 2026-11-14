@@ -44,13 +44,24 @@ Actions use **random synthetic** images/state — not meaningful robot commands,
 ## Python API
 
 ```python
+from minipi05 import HairyOrangutan
+
+# Public HF repos — no token required
+orangutan = HairyOrangutan.libero_rt()           # blend rt_libero_s0..s3
+orangutan = HairyOrangutan.libero_rt(seed=0)     # single student
+
+chunk = orangutan.predict_chunk(images, state)   # (1, horizon, action_dim)
+action = orangutan.step(images, state)           # (action_dim,)
+print(orangutan.describe())
+```
+
+Lower-level:
+
+```python
 from minipi05 import load_policy, load_controller
 
-policy = load_policy(hf_repo="your-user/minipi05-droid-gdn", device="cuda")
-print(policy.config.preset, policy.checkpoint_args)  # args if saved at train time
-
-ctrl = load_controller(checkpoint="student.pt", device="cuda")
-action = ctrl.step(images, state)  # (action_dim,)
+policy = load_policy(hf_repo="LucaPeroxide/minipi05-libero-rt-s0", device="cuda")
+ctrl = load_controller(hf_repo="LucaPeroxide/minipi05-libero-rt-s0", device="cuda")
 ```
 
 ## GDN + RT checkpoints (paper table)
@@ -109,31 +120,30 @@ python scripts/vendor_stm.py
 
 ## Google Colab smoke test
 
-1. **Runtime → Change runtime type → T4 GPU**
-2. Open `notebooks/minipi05_colab_smoke.ipynb`, or paste:
+1. **Runtime → T4 GPU**
+2. Install (public models → **no HF token**):
 
 ```python
 %pip install -q "git+https://github.com/lucehe/minipi05.git"
 %pip install -q triton
 ```
 
-3. Optional (private HF repos): Colab **Secrets** → `HF_TOKEN` (read is enough for downloads).
+3. Smoke (needs public `LucaPeroxide/minipi05-libero-rt-s*` on Hub):
 
 ```python
-import os
-from google.colab import userdata
-os.environ["HF_TOKEN"] = userdata.get("HF_TOKEN")
+import torch
+from minipi05 import HairyOrangutan
+
+assert torch.cuda.is_available()
+bot = HairyOrangutan.libero_rt(seed=0)  # downloads once → ~/.cache/minipi05
+cfg = bot.backend.config
+images = torch.rand(1, cfg.num_cameras, 3, cfg.image_size, cfg.image_size, device="cuda")
+state = torch.randn(1, cfg.state_dim, device="cuda")
+print(bot.describe())
+print("chunk", bot.predict_chunk(images, state).shape)
 ```
 
-4. Run all four RT experts (after you published `minipi05-libero-rt-s0` … `s3`):
-
-```bash
-!git clone --depth 1 https://github.com/lucehe/minipi05.git /content/minipi05
-!python /content/minipi05/scripts/colab_smoke.py --experts rt_libero_s0 --benchmark
-!python /content/minipi05/scripts/colab_smoke.py --experts rt_libero_s0,rt_libero_s1,rt_libero_s2,rt_libero_s3
-```
-
-Success = each line prints `predict_chunk OK` with `delta=stm`. If GitHub lags your JZ tree, pip from a branch or `pip install -e /content/minipi05` after uploading the repo to Drive.
+See `notebooks/minipi05_colab_smoke.ipynb` for all four seeds + ensemble.
 
 ## License
 

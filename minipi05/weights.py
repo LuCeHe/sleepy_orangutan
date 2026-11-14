@@ -59,10 +59,12 @@ def download_from_huggingface(
     if dest.is_file() and dest.stat().st_size > 0:
         return dest
 
+    # Public model repos work without HF_TOKEN (anonymous Hub access).
     cached = hf_hub_download(
         repo_id=repo_id,
         filename=filename,
         revision=revision,
+        token=os.environ.get("HF_TOKEN") or None,
     )
     dest.parent.mkdir(parents=True, exist_ok=True)
     shutil.copy2(cached, dest)
