@@ -1,9 +1,6 @@
-<p align="center">
-  <img src="https://huggingface.co/front/assets/huggingface_logo-noborder.svg" width="80" alt="Hugging Face"/>
-</p>
 
 <h1 align="center">🦧 Sleepy Orangutan</h1>
-<h3 align="center">Edge-computing VLA inference for distilled π₀.₅ students</h3>
+<h3 align="center">Microscopic VLA inference for distilled π₀.₅ students</h3>
 
 <p align="center">
   <a href="https://huggingface.co/LucaPeroxide"><img alt="Checkpoints on Hub" src="https://img.shields.io/badge/%F0%9F%A4%97%20Checkpoints-Hub-yellow"/></a>
