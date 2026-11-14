@@ -25,6 +25,12 @@ def default_checkpoint_path(name: str = "student.pt") -> Path:
     return cache_dir() / name
 
 
+def hf_cache_path(repo_id: str, filename: str = "student.pt") -> Path:
+    """One cached file per Hub repo (so GDN + RT seeds do not overwrite ``student.pt``)."""
+    safe = repo_id.strip().replace("/", "__")
+    return cache_dir() / f"{safe}__{filename}"
+
+
 def _verify_sha256(path: Path, expected: str) -> None:
     if not expected:
         return
@@ -49,7 +55,7 @@ def download_from_huggingface(
     import shutil
     from huggingface_hub import hf_hub_download
 
-    dest = dest or default_checkpoint_path(filename)
+    dest = dest or hf_cache_path(repo_id, filename)
     if dest.is_file() and dest.stat().st_size > 0:
         return dest
 
@@ -114,6 +120,7 @@ def ensure_checkpoint(
     checkpoint: str | os.PathLike[str] | None = None,
     hf_repo: str | None = None,
     hf_filename: str = DEFAULT_HF_FILENAME,
+    hf_revision: str | None = None,
     gdrive_id: str | None = None,
     url: str | None = None,
     checksum_sha256: str | None = None,
@@ -137,16 +144,25 @@ def ensure_checkpoint(
             return path
         raise FileNotFoundError(f"Checkpoint not found: {path}")
 
+    repo = hf_repo or DEFAULT_HF_REPO
+    if repo:
+        cached = hf_cache_path(repo, hf_filename)
+        if cached.is_file() and cached.stat().st_size > 0:
+            _verify_sha256(cached, checksum)
+            return cached
+        path = download_from_huggingface(
+            repo_id=repo,
+            filename=hf_filename,
+            dest=cached,
+            revision=hf_revision,
+        )
+        _verify_sha256(path, checksum)
+        return path
+
     cached = default_checkpoint_path(hf_filename)
     if cached.is_file() and cached.stat().st_size > 0:
         _verify_sha256(cached, checksum)
         return cached
-
-    repo = hf_repo or DEFAULT_HF_REPO
-    if repo:
-        path = download_from_huggingface(repo_id=repo, filename=hf_filename, dest=cached)
-        _verify_sha256(path, checksum)
-        return path
 
     drive_id = gdrive_id or DEFAULT_GDRIVE_FILE_ID
     if drive_id:

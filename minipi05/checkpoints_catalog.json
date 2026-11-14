@@ -1,0 +1,86 @@
+{
+  "version": 2,
+  "hf_org": "LucaPeroxide",
+  "experts": [
+    {
+      "id": "gdn_droid_s0",
+      "family": "gdn",
+      "seed": 0,
+      "label": "GDN DROID (legacy publish)",
+      "hf_repo": "LucaPeroxide/minipi05-droid-gdn-au7ir",
+      "hf_file": "student.pt"
+    },
+    {
+      "id": "rt_libero_s0",
+      "family": "rt",
+      "seed": 0,
+      "preset": "s100_libero_10m",
+      "label": "RT/4+FLA4 LIBERO plain distill",
+      "hf_repo": "LucaPeroxide/minipi05-libero-rt-s0",
+      "hf_file": "student.pt"
+    },
+    {
+      "id": "rt_libero_s1",
+      "family": "rt",
+      "seed": 1,
+      "preset": "s100_libero_10m",
+      "label": "RT/4+FLA4 LIBERO seed 1",
+      "hf_repo": "LucaPeroxide/minipi05-libero-rt-s1",
+      "hf_file": "student.pt"
+    },
+    {
+      "id": "rt_libero_s2",
+      "family": "rt",
+      "seed": 2,
+      "preset": "s100_libero_10m",
+      "label": "RT/4+FLA4 LIBERO seed 2",
+      "hf_repo": "LucaPeroxide/minipi05-libero-rt-s2",
+      "hf_file": "student.pt"
+    },
+    {
+      "id": "rt_libero_s3",
+      "family": "rt",
+      "seed": 3,
+      "preset": "s100_libero_10m",
+      "label": "RT/4+FLA4 LIBERO seed 3",
+      "hf_repo": "LucaPeroxide/minipi05-libero-rt-s3",
+      "hf_file": "student.pt"
+    },
+    {
+      "id": "gdn_libero_s0",
+      "family": "gdn",
+      "seed": 0,
+      "preset": "s100_libero_10m",
+      "label": "GDN LIBERO seed 0",
+      "hf_repo": "LucaPeroxide/minipi05-libero-gdn-s0",
+      "hf_file": "student.pt"
+    },
+    {
+      "id": "gdn_libero_s1",
+      "family": "gdn",
+      "seed": 1,
+      "preset": "s100_libero_10m",
+      "label": "GDN LIBERO seed 1",
+      "hf_repo": "LucaPeroxide/minipi05-libero-gdn-s1",
+      "hf_file": "student.pt"
+    },
+    {
+      "id": "gdn_libero_s2",
+      "family": "gdn",
+      "seed": 2,
+      "preset": "s100_libero_10m",
+      "label": "GDN LIBERO seed 2",
+      "hf_repo": "LucaPeroxide/minipi05-libero-gdn-s2",
+      "hf_file": "student.pt"
+    },
+    {
+      "id": "gdn_libero_s3",
+      "family": "gdn",
+      "seed": 3,
+      "preset": "s100_libero_10m",
+      "label": "GDN LIBERO seed 3",
+      "hf_repo": "LucaPeroxide/minipi05-libero-gdn-s3",
+      "hf_file": "student.pt"
+    }
+  ]
+}

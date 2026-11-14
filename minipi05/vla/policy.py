@@ -48,7 +48,7 @@ class GDNActionTrunk(nn.Module):
                 raise ValueError(
                     f"VLA trunk notes {trunk_notes!r} did not build an SSM module "
                     f"(layer {i}; delta={config.delta_type!r}). "
-                    "Use delta:gateddelta (minipi05 supports GDN students only)."
+                    "Set config.notes with delta:gateddelta or delta:stm (RT needs PebbleTrail)."
                 )
             layers.append(rnn)
         self.layers = nn.ModuleList(layers)

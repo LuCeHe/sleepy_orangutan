@@ -1,4 +1,4 @@
-"""GDN-only action trunk builder (minipi05 ships ``delta:gateddelta`` only)."""
+"""Action trunk layers: GDN in-tree; RT/STM vendored under ``minipi05.stm``."""
 
 from __future__ import annotations
 
@@ -27,8 +27,7 @@ def build_gdn_layer(config: SimpleNamespace, *, layer_idx: int = 0) -> nn.Module
     delta_type = _delta_type(notes)
     if delta_type not in ("gateddelta", "gateddeltanet"):
         raise ValueError(
-            f"minipi05 supports GDN students only (delta:gateddelta); got delta:{delta_type!r}. "
-            "Retrain with vla_distill_delta:gateddelta or use a GDN checkpoint."
+            f"build_gdn_layer expected delta:gateddelta; got delta:{delta_type!r}."
         )
 
     gdn_heads, gdn_head_dim = _gdn_num_heads_head_dim(int(config.hidden_size))
@@ -60,5 +59,16 @@ def build_gdn_layer(config: SimpleNamespace, *, layer_idx: int = 0) -> nn.Module
 
 def get_analyzers(config: SimpleNamespace, layer_idx: int = 0):
     """PebbleTrail-compatible hook: returns (passthrough_fn, rnn_module)."""
-    rnn = build_gdn_layer(config, layer_idx=layer_idx)
-    return (lambda x: x), rnn
+    notes = getattr(config, "notes", "") or ""
+    delta_type = _delta_type(notes)
+    if delta_type in ("gateddelta", "gateddeltanet"):
+        rnn = build_gdn_layer(config, layer_idx=layer_idx)
+        return (lambda x: x), rnn
+    if delta_type in ("stm", "stm2"):
+        from minipi05.stm.analyzers import build_stm_layer
+
+        rnn = build_stm_layer(config, layer_idx=layer_idx)
+        return (lambda x: rnn(x)), rnn
+    raise ValueError(
+        f"minipi05 supports delta:gateddelta and delta:stm (RT); got delta:{delta_type!r}."
+    )

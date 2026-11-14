@@ -14,6 +14,7 @@ def load_policy(
     device: str = "cpu",
     hf_repo: str | None = None,
     hf_filename: str = "student.pt",
+    hf_revision: str | None = None,
     gdrive_id: str | None = None,
     url: str | None = None,
     checksum_sha256: str | None = None,
@@ -25,16 +26,17 @@ def load_policy(
         checkpoint=checkpoint,
         hf_repo=hf_repo,
         hf_filename=hf_filename,
+        hf_revision=hf_revision,
         gdrive_id=gdrive_id,
         url=url,
         checksum_sha256=checksum_sha256,
     )
     policy = VLAStudentPolicy.load_checkpoint(str(path), map_location=device)
     delta = policy.config.delta_type
-    if delta not in ("gateddelta", "gateddeltanet"):
+    if delta not in ("gateddelta", "gateddeltanet", "stm"):
         raise ValueError(
-            f"Checkpoint trunk is delta:{delta!r}; minipi05 ships GDN inference only. "
-            "Publish a student trained with vla_distill_delta:gateddelta."
+            f"Checkpoint trunk delta:{delta!r} is not supported. "
+            "Use GDN or RT/STM students from the minipi05 checkpoint catalog."
         )
     policy.eval()
     policy.to(device)
