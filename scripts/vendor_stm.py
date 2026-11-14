@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-"""Copy STM / conv layers from thepebbletrail_official into minipi05.stm (one-time vendoring)."""
+"""Copy STM / conv layers from thepebbletrail_official into sleepy_orangutan.stm (one-time vendoring)."""
 
 from __future__ import annotations
 
@@ -8,7 +8,7 @@ import shutil
 from pathlib import Path
 
 SRC = Path(r"C:\Users\Luca\work\thepebbletrail_official\neuron_utils\_more_layers")
-DST = Path(r"C:\Users\Luca\work\minipi05\minipi05\stm")
+DST = Path(r"C:\Users\Luca\work\minipi05\sleepy_orangutan\stm")
 
 FILES = [
     "state_tensor_model.py",
@@ -21,15 +21,15 @@ FILES = [
 ]
 
 REPLACEMENTS = [
-    ("thepebbletrail_official.neuron_utils._more_layers", "minipi05.stm"),
-    ("thepebbletrail_official.neuron_utils.gateddeltanet", "minipi05.gateddeltanet"),
+    ("thepebbletrail_official.neuron_utils._more_layers", "sleepy_orangutan.stm"),
+    ("thepebbletrail_official.neuron_utils.gateddeltanet", "sleepy_orangutan.gateddeltanet"),
     (
         "from pyaromatics.stay_organized.utils import str2val",
-        "from minipi05.stm.str2val import str2val",
+        "from sleepy_orangutan.stm.str2val import str2val",
     ),
     (
         "from pyaromatics.stay_organized.utils import str2val",
-        "from minipi05.stm.str2val import str2val",
+        "from sleepy_orangutan.stm.str2val import str2val",
     ),
 ]
 
@@ -43,7 +43,7 @@ import torch.nn.functional as F
 from torch import Tensor
 from transformers.activations import ACT2CLS
 
-from minipi05.stm.str2val import str2val
+from sleepy_orangutan.stm.str2val import str2val
 
 try:
     import triton
@@ -59,7 +59,7 @@ possible_output_collapse_methods = [
 ]
 
 def light_causal_conv2d_fn(*args, **kwargs):
-    raise NotImplementedError("lc2dv2 CUDA path not vendored for minipi05 inference")
+    raise NotImplementedError("lc2dv2 CUDA path not vendored for sleepy_orangutan inference")
 
 def _can_use_cuda_kernel(*args, **kwargs):
     return False
@@ -114,7 +114,7 @@ except ImportError:
 def _patch_some_convs(text: str) -> str:
     """Replace heavy CUDA import block with stub header tail join."""
     marker_start = 'from thepebbletrail_official.neuron_utils._more_layers.some_convs_cuda import ('
-    if marker_start not in text and 'from minipi05.stm.some_convs_cuda import' not in text:
+    if marker_start not in text and 'from sleepy_orangutan.stm.some_convs_cuda import' not in text:
         if 'possible_output_collapse_methods' in text[:3000]:
             # Already patched or uses new layout
             idx = text.find("def concalt_perm")
@@ -125,7 +125,7 @@ def _patch_some_convs(text: str) -> str:
     start = text.find('from ')
     for needle in (
         'from thepebbletrail_official.neuron_utils._more_layers.some_convs_cuda import',
-        'from minipi05.stm.some_convs_cuda import',
+        'from sleepy_orangutan.stm.some_convs_cuda import',
     ):
         if needle in text:
             start = text.find(needle)
@@ -158,7 +158,7 @@ def main() -> None:
     # Stubs for optional CUDA training kernels (not needed for VLA inference).
     stub = DST / "stm_chunked_bilinear_ext.py"
     stub.write_text(
-        '"""Optional CUDA bilinear ext (stub — not built in minipi05)."""\n'
+        '"""Optional CUDA bilinear ext (stub — not built in sleepy_orangutan)."""\n'
         "def extension_available():\n    return False\n",
         encoding="utf-8",
     )

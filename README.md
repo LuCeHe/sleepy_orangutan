@@ -1,37 +1,52 @@
-# minipi05
+# sleepy_orangutan
 
-Pi05 distilled on a RunningTensor 1000x smaller and 5x faster.
+**Sleepy Orangutan** — tiny edge VLAs distilled from Physical Intelligence **π₀.₅** on LIBERO with a **RunningTensor** linear attention students, ~1000× smaller than the teacher with low-latency chunk inference.
+
 
 ## Install
 
+
 ```bash
-pip install "git+https://github.com/lucehe/minipi05.git"
+pip install "git+https://github.com/lucehe/sleepy_orangutan.git"
+pip install "sleepy-orangutan[gpu] @ git+https://github.com/lucehe/sleepy_orangutan.git"  # Linux + Triton
 ```
 
 
 ## Python API
 
 ```python
-from minipi05 import HairyOrangutan
+from sleepy_orangutan import SleepyOrangutan
 
-# Public HF repos — no token required
-orangutan = HairyOrangutan.libero_rt()           # blend rt_libero_s0..s3
-orangutan = HairyOrangutan.libero_rt(seed=0)     # single student
+bot = SleepyOrangutan.libero_rt(seed=0)       # downloads LucaPeroxide/minipi05-libero-rt-s0
+blend = SleepyOrangutan.libero_rt()           # seeds 0–3, uniform mean
 
-chunk = orangutan.predict_chunk(images, state)   # (1, horizon, action_dim)
-action = orangutan.step(images, state)           # (action_dim,)
-print(orangutan.describe())
+chunk = bot.predict_chunk(images, state)
+action = bot.step(images, state)
+print(bot.describe())
 ```
 
-Lower-level:
+Lower-level (explicit Hub id):
 
 ```python
-from minipi05 import load_policy, load_controller
+from sleepy_orangutan import load_policy
 
 policy = load_policy(hf_repo="LucaPeroxide/minipi05-libero-rt-s0", device="cuda")
-ctrl = load_controller(hf_repo="LucaPeroxide/minipi05-libero-rt-s0", device="cuda")
 ```
+
+Cache directory: `~/.cache/sleepy_orangutan/` (override with `SLEEPY_ORANGUTAN_CACHE`).
+
+## Colab
+
+```python
+%pip install -q "git+https://github.com/lucehe/sleepy_orangutan.git"
+%pip install -q triton
+import torch
+from sleepy_orangutan import SleepyOrangutan
+bot = SleepyOrangutan.libero_rt(seed=0)
+```
+
+See `notebooks/minipi05_colab_smoke.ipynb` (update pip URL after GitHub rename).
 
 ## License
 
-MIT for minipi05 wrapper; `minipi05/gateddeltanet/` includes FLA-derived code — see `gateddeltanet/LICENSE_FLA`.
+MIT for the wrapper; `sleepy_orangutan/gateddeltanet/` includes FLA-derived code — see `gateddeltanet/LICENSE_FLA`.

@@ -13,7 +13,7 @@ def main() -> None:
     p.add_argument(
         "--catalog",
         type=Path,
-        default=Path(__file__).resolve().parents[1] / "minipi05" / "checkpoints_catalog.json",
+        default=Path(__file__).resolve().parents[1] / "sleepy_orangutan" / "checkpoints_catalog.json",
     )
     p.add_argument(
         "--student-root",

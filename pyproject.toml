@@ -3,9 +3,9 @@ requires = ["setuptools>=68", "wheel"]
 build-backend = "setuptools.build_meta"
 
 [project]
-name = "minipi05"
-version = "0.3.3"
-description = "Pip-installable GDN + RT distilled π₀.₅ VLA students (inference only)"
+name = "sleepy-orangutan"
+version = "0.4.0"
+description = "Sleepy Orangutan — pip-installable GDN + RT distilled π₀.₅ VLA students (inference only)"
 readme = "README.md"
 requires-python = ">=3.10"
 license = { text = "MIT" }
@@ -26,11 +26,11 @@ gpu = [
 gdrive = ["gdown>=4.0"]
 
 [project.scripts]
-minipi05-demo = "minipi05.demo:main"
+sleepy-orangutan-demo = "sleepy_orangutan.demo:main"
 
 [tool.setuptools.packages.find]
 where = ["."]
-include = ["minipi05*"]
+include = ["sleepy_orangutan*"]
 
 [tool.setuptools.package-data]
-minipi05 = ["checkpoints_catalog.json"]
+sleepy_orangutan = ["checkpoints_catalog.json"]

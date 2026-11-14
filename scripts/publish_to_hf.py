@@ -33,7 +33,7 @@ def main() -> None:
         commit_message=f"Add {args.filename}",
     )
     print(f"Uploaded {args.checkpoint} -> hf://{args.repo_id}/{args.filename}")
-    print(f"Friends run: export MINIPI05_HF_REPO={args.repo_id} && minipi05-demo")
+    print(f"Friends run: pip install sleepy-orangutan && SleepyOrangutan.libero_rt()  # catalog hf_repo")
 
 
 if __name__ == "__main__":
